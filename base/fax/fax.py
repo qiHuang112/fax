@@ -63,7 +63,7 @@ def get_year_end_bonus(bonus):
     return bonus - tax
 
 
-def plot_bonus(r=range(0, 1000000), point: int = 0):
+def plot_bonus(r=range(0, 1200000), point: int = 0):
     """
     :param r: 税前年终奖区间
     :param point: 需要标出的点（税前年终奖的值）
@@ -93,9 +93,23 @@ def get_bad_sections():
     return [(sections[i], int(get_right(i))) for i in range(len(sections))]
 
 
+def examples():
+    # 小王在上海每月工资2W，一年里每个月的绩效工资都是1000，速算扣除数为1500，上海的五险一金比例为17.5%（养老保险 8%，医疗保险 2%，失业保险0.5%，住房公积金7%）
+    print("小王每个月的工资为%s" % get_monthly_salary(20000, [1000] * 12, 1500, 0.175))
+    # 小李在杭州每月工资1.5W，前五个月的绩效工资分别是(0, 500, 1000, 1000, 500)，速算扣除数为1500，杭州的五险一金比例为22.5%（8% + 2% + 0.5% + 12% = 22.5%）
+    print("小李前五个月的工资为%s" % get_monthly_salary(15000, [0, 500, 1000, 1000, 500], 1500, 0.225))
+    # 小张的税前年终奖为36000，计算税后年终奖
+    print("小张的税后年终奖为%d" % get_year_end_bonus(36000))
+    # 小刘的税前年终奖为37000，计算税后年终奖(比小张拿的还少，心态崩了)
+    print("小刘的税后年终奖为%d" % get_year_end_bonus(37000))
+
+
 if __name__ == '__main__':
-    # plot_bonus()
+    # 计算工资和年终奖的几个小例子
+    examples()
+    # 计算“不好”的年终奖区间
+    print(get_bad_sections())
+    # 画出税前年终奖与税后年终奖曲线图
+    plot_bonus()
     # plot_bonus(r=range(20000, 40000), point=36000)
     # plot_bonus(r=range(100000, 200000), point=144000)
-    # print(get_bad_sections())
-    print(get_monthly_salary(17000, [0, 500, 1000, 1200, 1500], 1500, 0.175))
